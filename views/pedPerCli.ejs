@@ -1,0 +1,110 @@
+<%- include('partials/sidebar.ejs'); %>
+    <main class="">
+
+        <div class="grid mb-4  pb-10 px-8 mx-4 rounded-3xl bg-opacity-0 border-4 border-blach">
+            <div class="grid mb-0 mt-4  pb-10 px-8 mx-4 ">
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Mueble:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Tipo de madera:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Accesorios:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Detalles
+                    especificos:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Tipo de algodon:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Tipo de tela:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+
+            <div class="grid grid-cols-2 mb-0  pb-10 px-8 mx-4  ">
+                <div class="grid ">
+                    <label for="fileInput"
+                        class="cursor-pointer bg-opacity-0  hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+                        Adjuntar Archivo
+                    </label>
+                    <input id="fileInput" type="file" class="hidden" />
+                </div>
+                <div class="grid">
+                    <h1>Cantidad</h1>
+                    <div class="text-center">
+                        <div class="flex items-center">
+                            <button id="decreaseBtn"
+                                class="bg-bg-opacity-0  hover:bg-red-700 text-white font-bold py-2 px-4 rounded-l">
+                                -
+                            </button>
+                            <input id="quantityInput" type="text" value="1" class="border text-center w-16" readonly />
+                            <button id="increaseBtn"
+                                class="bg-bg-opacity-0  hover:bg-green-700 text-white font-bold py-2 px-4 rounded-r">
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    <script>
+                        document.getElementById('decreaseBtn').addEventListener('click', function () {
+                            decreaseQuantity();
+                        });
+
+                        document.getElementById('increaseBtn').addEventListener('click', function () {
+                            increaseQuantity();
+                        });
+
+                        function decreaseQuantity() {
+                            var quantityInput = document.getElementById('quantityInput');
+                            var currentValue = parseInt(quantityInput.value, 10);
+                            if (currentValue > 1) {
+                                quantityInput.value = currentValue - 1;
+                            }
+                        }
+
+                        function increaseQuantity() {
+                            var quantityInput = document.getElementById('quantityInput');
+                            var currentValue = parseInt(quantityInput.value, 10);
+                            quantityInput.value = currentValue + 1;
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div class="grid mb-0  pb-10 px-8 mx-4 text-white ">
+                <h1>Datos personales</h1>
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Correo Electronico:</label>
+                <input type="email" id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="name@flowbite.com" required>
+                <label for="" class=" block  text-sm font-medium text-white dark:text-white">Telefono:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <div class="grid grid-cols-2 mb-0  pb-10 px-8 mx-4  ">
+                <div class="grid">
+                    <label for="" class=" block  text-sm font-medium text-white dark:text-white">Nombre:</label>
+                <input type="" id=""
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             
+                </div>
+                <div class="grid">
+                    <label for="" class=" block  text-sm font-medium text-white dark:text-white">Apellidos:</label>
+                    <input type="" id=""
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block   p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                
+                </div>
+            </div>
+            <div class="grid mb-0  pb-10 px-8 mx-4 justify-center  ">
+                <a href="/confirSoliCli">
+                        <button
+                            class="bg-opacity-0 mt-2  hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4  border border-blue-500 hover:border-transparent rounded">
+                            Solicitar
+                        </button>
+                    </a>
+            </div>
+        </div>
+    </main>

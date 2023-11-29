@@ -1,0 +1,541 @@
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Proyecto` DEFAULT CHARACTER SET utf8 ;
+USE `Proyecto` ;
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`EMPRESA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`EMPRESA` (
+  `idEmpresa` INT NOT NULL,
+  `Nombre_empresa` VARCHAR(50) NULL,
+  `Direccion` VARCHAR(100) NULL,
+  `RUC` VARCHAR(15) NULL,
+  PRIMARY KEY (`idEmpresa`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PROVEEDOR`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`PROVEEDOR` (
+  `idProveedor` INT NOT NULL,
+  `Representante_legal` VARCHAR(100) NULL,
+  `RUC` VARCHAR(15) NULL,
+  `Telefono` VARCHAR(9) NULL,
+  `Correo` VARCHAR(200) NULL,
+  `Direccion` VARCHAR(100) NULL,
+  `EMPRESA_idEmpresa` INT NOT NULL,
+  `EMPRESA_idEmpresa1` INT NOT NULL,
+  PRIMARY KEY (`idProveedor`, `EMPRESA_idEmpresa`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`CONTRATO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`CONTRATO` (
+  `idCONTRATO` INT NOT NULL,
+  `Fecha_inicio` DATE NULL,
+  `Fecha_fin` DATE NULL,
+  `Detalle_contrato` VARCHAR(300) NULL,
+  `Estado` VARCHAR(45) NULL,
+  `PROVEEDOR_idProveedor` INT NOT NULL,
+  `PROVEEDOR_EMPRESA_idEmpresa` INT NOT NULL,
+  PRIMARY KEY (`idCONTRATO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`ALMACEN`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`ALMACEN` (
+  `idALMACEN` INT NOT NULL,
+  `Fecha_entrada` DATE NULL,
+  `Cantidad` VARCHAR(10) NULL,
+  `Condicion` VARCHAR(50) NULL,
+  PRIMARY KEY (`idALMACEN`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PEDIDO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`PEDIDO` (
+  `idPEDIDO` INT NOT NULL,
+  `Detalle` VARCHAR(200) NULL,
+  `Cantidad` VARCHAR(10) NULL,
+  `Precio_Unitario` DECIMAL NULL,
+  `Fecha_contrato` DATE NULL,
+  `Condiciones` VARCHAR(200) NULL,
+  `CONTRATO_idCONTRATO` INT NOT NULL,
+  `ALMACEN_idALMACEN` INT NOT NULL,
+  PRIMARY KEY (`idPEDIDO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PEDIDO_PERSONALIZADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`PEDIDO_PERSONALIZADO` (
+  `idPEDIDO_PERSONALIZADO` INT NOT NULL,
+  `Fecha_pedido` DATE NULL,
+  `Fecha_envio` DATE NULL,
+  `Fecha_entrega` DATE NULL,
+  `Caracteristicas` VARCHAR(200) NULL,
+  `PEDIDO_idPEDIDO` INT NOT NULL,
+  PRIMARY KEY (`idPEDIDO_PERSONALIZADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`EMPLEADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`EMPLEADO` (
+  `idEMPLEADO` INT NOT NULL,
+  `Nombre_Empleado` VARCHAR(50) NULL,
+  `Apellido_pat` VARCHAR(45) NULL,
+  `Apellido_mat` VARCHAR(45) NULL,
+  `DNI` VARCHAR(8) NULL,
+  `Correo` VARCHAR(200) NULL,
+  `Telefono` VARCHAR(9) NULL,
+  `EMPRESA_idEmpresa` INT NOT NULL,
+  PRIMARY KEY (`idEMPLEADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`INVENTARIO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`INVENTARIO` (
+  `idINVENTARIO` INT NOT NULL,
+  `Fecha_ingreso` DATE NULL,
+  `Cantidad` VARCHAR(10) NULL,
+  `Serie` VARCHAR(40) NULL,
+  `Costo_almacen` DECIMAL NULL,
+  `ALMACEN_idALMACEN` INT NOT NULL,
+  PRIMARY KEY (`idINVENTARIO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`INVENTARIO_DETALLE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`INVENTARIO_DETALLE` (
+  `idINVENTARIO_DETALLE` INT NOT NULL,
+  `INVENTARIO_idINVENTARIO` INT NOT NULL,
+  PRIMARY KEY (`idINVENTARIO_DETALLE`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`CATEGORIA_PRODUCTO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`CATEGORIA_PRODUCTO` (
+  `idCATEGORIA_PRODUCTO` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Descripcion` VARCHAR(200) NULL,
+  PRIMARY KEY (`idCATEGORIA_PRODUCTO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PRODUCTO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`PRODUCTO` (
+  `idPRODUCTO` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Descripcion` VARCHAR(200) NULL,
+  `Stock` VARCHAR(15) NULL,
+  `Precio` DECIMAL NULL,
+  `Foto` LONGBLOB NULL,
+  `INVENTARIO_DETALLE_idINVENTARIO_DETALLE` INT NOT NULL,
+  `EMPLEADO_idEMPLEADO` INT NOT NULL,
+  `CATEGORIA_PRODUCTO_idCATEGORIA_PRODUCTO` INT NOT NULL,
+  PRIMARY KEY (`idPRODUCTO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PRODUCTOS_DISPONIBLES`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`PRODUCTOS_DISPONIBLES` (
+  `idPRODUCTOS_DISPONIBLES` INT NOT NULL,
+  `PRODUCTO_idPRODUCTO` INT NOT NULL,
+  PRIMARY KEY (`idPRODUCTOS_DISPONIBLES`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`CLIENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`CLIENTE` (
+  `idCLIENTE` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Apellido_pat` VARCHAR(45) NULL,
+  `Apellido_mat` VARCHAR(45) NULL,
+  `DNI` VARCHAR(8) NULL,
+  `Direccion` VARCHAR(200) NULL,
+  `Telefono` VARCHAR(9) NULL,
+  `Correo` VARCHAR(200) NULL,
+  PRIMARY KEY (`idCLIENTE`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`VENTA` (
+  `idVENTA` INT NOT NULL,
+  `Fecha_venta` DATE NULL,
+  `Metodo_pago` VARCHAR(50) NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  PRIMARY KEY (`idVENTA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`COMPROBANTE_PAGO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`COMPROBANTE_PAGO` (
+  `idCOMPROBANTE_PAGO` INT NOT NULL,
+  `Tipo_comprobante` VARCHAR(50) NULL,
+  PRIMARY KEY (`idCOMPROBANTE_PAGO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`DETALLE_VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`DETALLE_VENTA` (
+  `id_DETALLE_VENTA` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Cantidad` INT NULL,
+  `Precio_unitario` DECIMAL NULL,
+  `Sub_total` DECIMAL NULL,
+  `IGV` DECIMAL NULL,
+  `TOTAL` DECIMAL NULL,
+  `VENTA_idVENTA` INT NOT NULL,
+  `COMPROBANTE_PAGO_idCOMPROBANTE_PAGO` INT NOT NULL,
+  `PRODUCTO_idPRODUCTO` INT NOT NULL,
+  PRIMARY KEY (`id_DETALLE_VENTA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`ESTADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`ESTADO` (
+  `idESTADO` INT NOT NULL,
+  `Nombre_estado` VARCHAR(45) NULL,
+  PRIMARY KEY (`idESTADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`SERVICIO_ENTREGA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`SERVICIO_ENTREGA` (
+  `idSERVICIO_ENTREGA` INT NOT NULL,
+  `Fecha_entrega` DATE NULL,
+  `Direccion` VARCHAR(200) NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  `ESTADO_idESTADO` INT NOT NULL,
+  PRIMARY KEY (`idSERVICIO_ENTREGA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`MONTAJE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`MONTAJE` (
+  `idMONTAJE` INT NOT NULL,
+  `Fecha` DATE NULL,
+  `Direccion` VARCHAR(200) NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  `ESTADO_idESTADO` INT NOT NULL,
+  PRIMARY KEY (`idMONTAJE`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`POST-VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto`.`POST-VENTA` (
+  `idPOST-VENTA` INT NOT NULL,
+  `Fecha_solicitud` DATE NULL,
+  `Descripcion` VARCHAR(200) NULL,
+  `Fecha_solucion` DATE NULL,
+  `Costo_garantia` DECIMAL NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  `ESTADO_idESTADO` INT NOT NULL,
+  PRIMARY KEY (`idPOST-VENTA`))
+ENGINE = InnoDB;
+
+
+**********PRUEBA***************
+
+CREATE TABLE IF NOT EXISTS `EMPRESA` (
+  `idEmpresa` INT NOT NULL,
+  `Nombre_empresa` VARCHAR(50) NULL,
+  `Direccion` VARCHAR(100) NULL,
+  `RUC` VARCHAR(15) NULL,
+  PRIMARY KEY (`idEmpresa`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PROVEEDOR`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PROVEEDOR` (
+  `idProveedor` INT NOT NULL,
+  `Representante_legal` VARCHAR(100) NULL,
+  `RUC` VARCHAR(15) NULL,
+  `Telefono` VARCHAR(9) NULL,
+  `Correo` VARCHAR(200) NULL,
+  `Direccion` VARCHAR(100) NULL,
+  `EMPRESA_idEmpresa` INT NOT NULL,
+  `EMPRESA_idEmpresa1` INT NOT NULL,
+  PRIMARY KEY (`idProveedor`, `EMPRESA_idEmpresa`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`CONTRATO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CONTRATO` (
+  `idCONTRATO` INT NOT NULL,
+  `Fecha_inicio` DATE NULL,
+  `Fecha_fin` DATE NULL,
+  `Detalle_contrato` VARCHAR(300) NULL,
+  `Estado` VARCHAR(45) NULL,
+  `PROVEEDOR_idProveedor` INT NOT NULL,
+  `PROVEEDOR_EMPRESA_idEmpresa` INT NOT NULL,
+  PRIMARY KEY (`idCONTRATO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`ALMACEN`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ALMACEN` (
+  `idALMACEN` INT NOT NULL,
+  `Fecha_entrada` DATE NULL,
+  `Cantidad` VARCHAR(10) NULL,
+  `Condicion` VARCHAR(50) NULL,
+  PRIMARY KEY (`idALMACEN`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PEDIDO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PEDIDO` (
+  `idPEDIDO` INT NOT NULL,
+  `Detalle` VARCHAR(200) NULL,
+  `Cantidad` VARCHAR(10) NULL,
+  `Precio_Unitario` DECIMAL NULL,
+  `Fecha_contrato` DATE NULL,
+  `Condiciones` VARCHAR(200) NULL,
+  `CONTRATO_idCONTRATO` INT NOT NULL,
+  `ALMACEN_idALMACEN` INT NOT NULL,
+  PRIMARY KEY (`idPEDIDO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PEDIDO_PERSONALIZADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PEDIDO_PERSONALIZADO` (
+  `idPEDIDO_PERSONALIZADO` INT NOT NULL,
+  `Fecha_pedido` DATE NULL,
+  `Fecha_envio` DATE NULL,
+  `Fecha_entrega` DATE NULL,
+  `Caracteristicas` VARCHAR(200) NULL,
+  `PEDIDO_idPEDIDO` INT NOT NULL,
+  PRIMARY KEY (`idPEDIDO_PERSONALIZADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`EMPLEADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `EMPLEADO` (
+  `idEMPLEADO` INT NOT NULL,
+  `Nombre_Empleado` VARCHAR(50) NULL,
+  `Apellido_pat` VARCHAR(45) NULL,
+  `Apellido_mat` VARCHAR(45) NULL,
+  `DNI` VARCHAR(8) NULL,
+  `Correo` VARCHAR(200) NULL,
+  `Telefono` VARCHAR(9) NULL,
+  `EMPRESA_idEmpresa` INT NOT NULL,
+  PRIMARY KEY (`idEMPLEADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`INVENTARIO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `INVENTARIO` (
+  `idINVENTARIO` INT NOT NULL,
+  `Fecha_ingreso` DATE NULL,
+  `Cantidad` VARCHAR(10) NULL,
+  `Serie` VARCHAR(40) NULL,
+  `Costo_almacen` DECIMAL NULL,
+  `ALMACEN_idALMACEN` INT NOT NULL,
+  PRIMARY KEY (`idINVENTARIO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`INVENTARIO_DETALLE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `INVENTARIO_DETALLE` (
+  `idINVENTARIO_DETALLE` INT NOT NULL,
+  `INVENTARIO_idINVENTARIO` INT NOT NULL,
+  PRIMARY KEY (`idINVENTARIO_DETALLE`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`CATEGORIA_PRODUCTO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CATEGORIA_PRODUCTO` (
+  `idCATEGORIA_PRODUCTO` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Descripcion` VARCHAR(200) NULL,
+  PRIMARY KEY (`idCATEGORIA_PRODUCTO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PRODUCTO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PRODUCTO` (
+  `idPRODUCTO` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Descripcion` VARCHAR(200) NULL,
+  `Stock` VARCHAR(15) NULL,
+  `Precio` DECIMAL NULL,
+  `Foto` LONGBLOB NULL,
+  `INVENTARIO_DETALLE_idINVENTARIO_DETALLE` INT NOT NULL,
+  `EMPLEADO_idEMPLEADO` INT NOT NULL,
+  `CATEGORIA_PRODUCTO_idCATEGORIA_PRODUCTO` INT NOT NULL,
+  PRIMARY KEY (`idPRODUCTO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`PRODUCTOS_DISPONIBLES`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PRODUCTOS_DISPONIBLES` (
+  `idPRODUCTOS_DISPONIBLES` INT NOT NULL,
+  `PRODUCTO_idPRODUCTO` INT NOT NULL,
+  PRIMARY KEY (`idPRODUCTOS_DISPONIBLES`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`CLIENTE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `CLIENTE` (
+  `idCLIENTE` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Apellido_pat` VARCHAR(45) NULL,
+  `Apellido_mat` VARCHAR(45) NULL,
+  `DNI` VARCHAR(8) NULL,
+  `Direccion` VARCHAR(200) NULL,
+  `Telefono` VARCHAR(9) NULL,
+  `Correo` VARCHAR(200) NULL,
+  PRIMARY KEY (`idCLIENTE`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `VENTA` (
+  `idVENTA` INT NOT NULL,
+  `Fecha_venta` DATE NULL,
+  `Metodo_pago` VARCHAR(50) NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  PRIMARY KEY (`idVENTA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`COMPROBANTE_PAGO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `COMPROBANTE_PAGO` (
+  `idCOMPROBANTE_PAGO` INT NOT NULL,
+  `Tipo_comprobante` VARCHAR(50) NULL,
+  PRIMARY KEY (`idCOMPROBANTE_PAGO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`DETALLE_VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `DETALLE_VENTA` (
+  `id_DETALLE_VENTA` INT NOT NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Cantidad` INT NULL,
+  `Precio_unitario` DECIMAL NULL,
+  `Sub_total` DECIMAL NULL,
+  `IGV` DECIMAL NULL,
+  `TOTAL` DECIMAL NULL,
+  `VENTA_idVENTA` INT NOT NULL,
+  `COMPROBANTE_PAGO_idCOMPROBANTE_PAGO` INT NOT NULL,
+  `PRODUCTO_idPRODUCTO` INT NOT NULL,
+  PRIMARY KEY (`id_DETALLE_VENTA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`ESTADO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ESTADO` (
+  `idESTADO` INT NOT NULL,
+  `Nombre_estado` VARCHAR(45) NULL,
+  PRIMARY KEY (`idESTADO`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`SERVICIO_ENTREGA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `SERVICIO_ENTREGA` (
+  `idSERVICIO_ENTREGA` INT NOT NULL,
+  `Fecha_entrega` DATE NULL,
+  `Direccion` VARCHAR(200) NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  `ESTADO_idESTADO` INT NOT NULL,
+  PRIMARY KEY (`idSERVICIO_ENTREGA`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`MONTAJE`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `MONTAJE` (
+  `idMONTAJE` INT NOT NULL,
+  `Fecha` DATE NULL,
+  `Direccion` VARCHAR(200) NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  `ESTADO_idESTADO` INT NOT NULL,
+  PRIMARY KEY (`idMONTAJE`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`.`POST-VENTA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `POST-VENTA` (
+  `idPOST-VENTA` INT NOT NULL,
+  `Fecha_solicitud` DATE NULL,
+  `Descripcion` VARCHAR(200) NULL,
+  `Fecha_solucion` DATE NULL,
+  `Costo_garantia` DECIMAL NULL,
+  `CLIENTE_idCLIENTE` INT NOT NULL,
+  `ESTADO_idESTADO` INT NOT NULL,
+  PRIMARY KEY (`idPOST-VENTA`))
+ENGINE = InnoDB;
