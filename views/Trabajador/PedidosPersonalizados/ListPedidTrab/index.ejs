@@ -1,0 +1,60 @@
+<%- include('../../../partialsTrab/sidebarTrab.ejs'); %>
+<main class="">
+    <div class="grid mb-4 pb-10 px-8 mx-4 rounded-3xl bg-opacity-0 border-4 border-blach">
+        <div id="carouselExampleCaptions" class="relative" data-te-carousel-init data-te-ride="carousel">
+        </div>
+
+    </div>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 my-6">
+                        <!--Tabla lista de items   -->
+                        
+                    <!--Tabla lista de items   -->
+                    <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                        <table class="w-full divide-y divide-gray-200 table-auto">
+                          <thead class=" text-white">
+                            <tr class="text-left text-xs font-bold  uppercase">
+                              <th scope="col" class="px-6 py-3">ID</th>
+                              <th scope="col" class="px-6 py-3">Fecha pedido</th>
+                              <th scope="col" class="px-10 py-3 text-right">Fecha de envio</th>
+                              <th scope="col" class="px-10 py-3 text-right">Fecha de entrega</th>
+                              <th scope="col" class="px-10 py-3 text-right">Caracteristicas</th>
+                              <th scope="col" class="px-10 py-3 text-right">id pedido</th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 dark:text-gray-400">
+                            <% for(var i = 0; i< data.length; i++) { %>
+                            <tr class="text-sm font-medium text-gray-900">
+                              <td class="px-6 py-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-indigo-500 text-white">
+                                  <%= data[i].idPEDIDO_PERSONALIZADO %>
+                                </span>
+                              </td>
+                              <td class="px-12 py-4 text-white"><%= data[i].Fecha_pedido%></td>
+                              <td class="px-12 py-4 text-white"><%= data[i].Fecha_envio%></td>
+                              <td class="px-12 py-4 text-white"><%= data[i].Fecha_entrega%></td>
+                              <td class="px-12 py-4 text-white"><%= data[i].Caracteristicas%></td>
+                              <td class="px-12 py-4 text-white"><%= data[i].PEDIDO_idPEDIDO%></td>
+                              
+
+                    
+                              </td>
+                            </tr>
+                            <% } %>
+                          </tbody>
+                        </table>
+                        <!-- if result is empty -->
+                        <% if(!data.length) { %>
+                          <p class="text-center">No se encontraron categorias!</p>
+                        <% } %>
+
+                     
+                        </div>
+
+    </div>
+
+
+
+    </div>
+</main>
+</body>
+</html> 
